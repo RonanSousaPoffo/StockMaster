@@ -22,7 +22,7 @@ const Login = () => {
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
-          <label>Email:</label>
+          <label>E-mail:</label>
           <input
             type="email"
             value={email}
@@ -31,7 +31,7 @@ const Login = () => {
           />
         </div>
         <div>
-          <label>Password:</label>
+          <label>Senha:</label>
           <input
             type="password"
             value={password}
@@ -40,7 +40,7 @@ const Login = () => {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button type="submit">Login</button>
+        <button type="submit">Entrar</button>
       </form>
     </div>
   );
