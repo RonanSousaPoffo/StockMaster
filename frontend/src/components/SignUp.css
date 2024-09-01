@@ -1,4 +1,4 @@
-/* src/components/Login.css */
+/* src/components/SignUp.css */
 body {
     font-family: Arial, sans-serif;
     background-color: #f3f4f6;
@@ -9,7 +9,7 @@ body {
     margin: 0;
 }
 
-.login-container {
+.signup-container {
     background-color: #fff;
     max-width: 400px;
     width: 100%;
@@ -19,14 +19,14 @@ body {
     text-align: center;
 }
 
-.login-container h2 {
+.signup-container h2 {
     color: #6a0dad; /* Roxo */
     margin-bottom: 30px;
     font-size: 24px;
     font-weight: bold;
 }
 
-.login-container label {
+.signup-container label {
     display: block;
     text-align: left;
     margin-bottom: 5px;
@@ -34,7 +34,7 @@ body {
     color: #333;
 }
 
-.login-container input {
+.signup-container input {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
@@ -44,13 +44,13 @@ body {
     font-size: 16px;
 }
 
-.login-container input:focus {
+.signup-container input:focus {
     border-color: #6a0dad; /* Roxo */
     outline: none;
     box-shadow: 0 0 8px rgba(106, 13, 173, 0.3);
 }
 
-.login-container button {
+.signup-container button {
     width: 100%;
     padding: 12px;
     background-color: #6a0dad; /* Roxo */
@@ -60,14 +60,14 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-bottom: 10px; /* Adicionado para espaço entre botões */
+    margin-bottom: 10px; /* Espaço entre botões */
 }
 
-.login-container button:hover {
+.signup-container button:hover {
     background-color: #5e009b; /* Roxo mais escuro */
 }
 
-.google-login-button {
+.google-signup-button {
     background-color: #4285F4; /* Cor padrão do botão do Google */
     display: flex;
     align-items: center;
@@ -76,7 +76,7 @@ body {
     margin-bottom: 10px; /* Espaço abaixo do botão do Google */
 }
 
-.google-login-button i {
+.google-signup-button i {
     font-size: 20px; /* Tamanho do ícone do Google */
 }
 
@@ -87,25 +87,15 @@ body {
     text-align: left;
 }
 
-.forgot-password {
+.login-link {
+    color: #000000; /* Roxo */
+    margin-top: 20px; /* Espaço acima do texto */
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-link a {
     color: #6a0dad; /* Roxo */
-    cursor: pointer;
-    margin-top: 10px; /* Espaço acima do texto */
-    font-size: 14px;
-    text-align: left;
-}
-
-/* Estilo do link "Crie sua conta" */
-.create-account-link {
-    display: inline-block;
-    margin-top: 10px;
-    font-weight: bold;
-    color: #6a0dad; /* Roxo ou a cor desejada */
     text-decoration: none;
-    font-size: 14px;
-    cursor: pointer; /* Muda o cursor para a mãozinha */
-}
-
-.create-account-link:hover {
-    text-decoration: none; /* Remove o sublinhado ao passar o mouse */
+    font-weight: bold;
 }
