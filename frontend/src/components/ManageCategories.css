@@ -1,0 +1,128 @@
+/* src/components/ManageCategories.css */
+
+.manage-categories-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.manage-categories-container h2 {
+    color: #6a0dad;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.add-category-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.add-category-container input {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: calc(100% - 130px); /* Ajusta a largura para o campo de nova categoria */
+    text-align: center;
+}
+
+.add-category-button {
+    background-color: #6a0dad;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block; /* Faz com que o botão seja um bloco */
+    margin: 20px auto; /* Centraliza o botão e dá margem em cima e embaixo */
+}
+
+.add-category-button:hover {
+    background-color: #5e009b;
+}
+
+.save-category-button, .cancel-edit-button {
+    background-color: #6a0dad;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block; /* Alinha os botões horizontalmente */
+    margin: 0 5px; /* Adiciona espaço entre os botões */
+}
+
+.save-category-button:hover {
+    background-color: #5e009b;
+}
+
+.cancel-edit-button {
+    background-color: #f44336;
+}
+
+.cancel-edit-button:hover {
+    background-color: #d32f2f;
+}
+
+.edit-category-button {
+    background-color: #ffa500;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.edit-category-button:hover {
+    background-color: #ff8c00;
+}
+
+.delete-category-button {
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.delete-category-button:hover {
+    background-color: #d32f2f;
+}
+
+.categories-list {
+    margin-top: 20px;
+}
+
+.categories-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.categories-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.categories-list li span {
+    flex: 1; /* Faz com que o nome da categoria ocupe o espaço disponível */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adiciona '...' para texto longo */
+    white-space: nowrap; /* Garante que o texto não quebre para a linha seguinte */
+    margin-right: 20px; /* Adiciona espaço entre o nome e os botões */
+}
+
+.categories-list li .button-group {
+    display: flex;
+    gap: 10px; /* Espaçamento entre os botões */
+}

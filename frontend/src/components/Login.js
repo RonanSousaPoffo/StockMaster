@@ -1,6 +1,6 @@
-// src/components/Login.js
-import React, { useState } from 'react';
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Para navegação
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail } from 'firebase/auth';
 import './Login.css';
 import { auth } from '../firebaseConfig'; // Certifique-se de que o caminho está correto
 
@@ -8,13 +8,26 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  // Verifica se o usuário já está logado
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigate('/home');
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Redirecionar ou mostrar uma mensagem de sucesso
+      navigate('/home'); // Redirecionar após o login
     } catch (err) {
       setError(err.message);
     }
@@ -24,7 +37,7 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      // Redirecionar ou mostrar uma mensagem de sucesso
+      navigate('/home'); // Redirecionar após o login
     } catch (err) {
       setError(err.message);
     }
@@ -44,8 +57,7 @@ const Login = () => {
   };
 
   const handleSignUp = () => {
-    // Redirecionar para a página de criação de conta
-    window.location.href = '/signup';
+    navigate('/signup'); // Redirecionar para a página de criação de conta
   };
 
   return (
