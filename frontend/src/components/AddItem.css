@@ -1,6 +1,6 @@
 /* src/components/AddItem.css */
 
-/* Estilos gerais para a tela de adicionar item */
+/* Contêiner principal */
 .add-item-container {
   max-width: 600px;
   margin: 0 auto;
@@ -10,12 +10,14 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos para os títulos */
 .add-item-container h2 {
   color: #6a0dad;
   margin-bottom: 20px;
   text-align: center;
 }
 
+/* Estilos para os rótulos */
 .add-item-container label {
   display: block;
   margin-bottom: 5px;
@@ -23,6 +25,7 @@
   color: #333;
 }
 
+/* Estilos para os campos de entrada */
 .add-item-container input,
 .add-item-container select {
   width: calc(100% - 30px);
@@ -33,6 +36,7 @@
   box-sizing: border-box;
 }
 
+/* Estilos para a seleção de categorias */
 .category-selection {
   display: flex;
   align-items: center;
@@ -40,11 +44,7 @@
   position: relative;
 }
 
-.category-selection select {
-  flex: 1;
-  padding: 10px;
-}
-
+/* Estilos para o botão de adicionar categoria */
 .add-category-button {
   margin-left: 10px;
   padding: 10px;
@@ -59,16 +59,22 @@
   height: 40px; /* Alinha verticalmente com o campo de seleção */
 }
 
-.save-item-button {
+/* Estilos para os botões de ação */
+.save-item-button,
+.back-button {
   width: 100%;
   padding: 12px;
-  background-color: #6a0dad;
-  color: #fff;
   border: none;
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.save-item-button {
+  background-color: #6a0dad;
+  color: #fff;
 }
 
 .save-item-button:hover {
@@ -78,15 +84,6 @@
 .back-button {
   background-color: #ccc;
   color: #333;
-  border: none;
-  border-radius: 4px;
-  padding: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .back-button:hover {
@@ -115,6 +112,7 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Alinhamento dos botões no modal */
 .button-group {
   display: flex;
   justify-content: flex-end;
