@@ -1,14 +1,17 @@
-// src/components/ViewInventory.js
 import React, { useEffect, useState } from 'react';
-import { db } from '../firebaseConfig'; // Importa o Firestore
-import { collection, getDocs } from 'firebase/firestore'; // Importa funções para obter documentos
-import './ViewInventory.css'; // Adicione um arquivo CSS para estilização
+import { db } from '../firebaseConfig';
+import { collection, getDocs, updateDoc, doc, addDoc } from 'firebase/firestore';
+import './ViewInventory.css';
 
 const ViewInventory = () => {
   const [items, setItems] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
+  const [editedItem, setEditedItem] = useState({});
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -27,7 +30,18 @@ const ViewInventory = () => {
       }
     };
 
+    const fetchCategories = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'categories'));
+        const categoriesList = querySnapshot.docs.map(doc => doc.data().name);
+        setCategories(categoriesList);
+      } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+      }
+    };
+
     fetchItems();
+    fetchCategories();
   }, []);
 
   useEffect(() => {
@@ -38,6 +52,48 @@ const ViewInventory = () => {
     );
     setFilteredItems(filtered);
   }, [searchTerm, items]);
+
+  const openEditModal = (item) => {
+    setCurrentItem(item);
+    setEditedItem(item);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setCurrentItem(null);
+    setEditedItem({});
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditedItem({
+      ...editedItem,
+      [name]: value
+    });
+  };
+
+  const saveEdit = async () => {
+    if (!currentItem) return;
+    const itemRef = doc(db, 'items', currentItem.id);
+    try {
+      await updateDoc(itemRef, editedItem);
+      await addDoc(collection(db, 'editLogs'), {
+        itemId: currentItem.id,
+        changes: editedItem,
+        timestamp: new Date()
+      });
+
+      const updatedItems = items.map(item =>
+        item.id === currentItem.id ? { ...item, ...editedItem } : item
+      );
+      setItems(updatedItems);
+      setFilteredItems(updatedItems);
+      closeEditModal();
+    } catch (error) {
+      console.error('Erro ao salvar edição:', error);
+    }
+  };
 
   return (
     <div className="view-inventory-container">
@@ -62,6 +118,7 @@ const ViewInventory = () => {
               <th>Quantidade</th>
               <th>Preço</th>
               <th>Categoria</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -73,15 +130,64 @@ const ViewInventory = () => {
                   <td>{item.quantity}</td>
                   <td>{item.price.toFixed(2)}</td>
                   <td>{item.category}</td>
+                  <td>
+                    <button onClick={() => openEditModal(item)}>Editar</button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5">Nenhum item encontrado</td>
+                <td colSpan="6">Nenhum item encontrado</td>
               </tr>
             )}
           </tbody>
         </table>
+      )}
+
+      {isEditModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Editar Item</h3>
+            <label>Nome:</label>
+            <input
+              type="text"
+              name="name"
+              value={editedItem.name}
+              onChange={handleEditChange}
+            />
+            <label>Quantidade:</label>
+            <input
+              type="number"
+              name="quantity"
+              value={editedItem.quantity}
+              onChange={handleEditChange}
+            />
+            <label>Preço:</label>
+            <input
+              type="number"
+              name="price"
+              value={editedItem.price}
+              onChange={handleEditChange}
+            />
+            <label>Categoria:</label>
+            <select
+              name="category"
+              value={editedItem.category}
+              onChange={handleEditChange}
+            >
+              <option value="">Selecione uma categoria</option>
+              {categories.map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <div className="button-group">
+              <button onClick={saveEdit} className="save-category-button">Salvar</button>
+              <button onClick={closeEditModal} className="cancel-edit-button">Cancelar</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
