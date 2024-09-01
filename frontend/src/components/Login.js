@@ -1,6 +1,6 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import { loginUser } from '../auth';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -9,6 +9,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
     try {
       await loginUser(email, password);
       // Redirecionar ou mostrar uma mensagem de sucesso
@@ -19,7 +20,7 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2>Logar em StockMaster</h2>
       <form onSubmit={handleLogin}>
         <div>
           <label>E-mail:</label>
