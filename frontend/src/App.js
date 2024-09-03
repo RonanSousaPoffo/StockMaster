@@ -7,6 +7,7 @@ import HomePage from './components/HomePage';
 import AddItem from './components/AddItem';
 import ViewInventory from './components/ViewInventory';
 import ManageCategories from './components/ManageCategories';
+import StockMovement from './components/StockMovement';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/add-item" element={<AddItem />} />
         <Route path="/view-inventory" element={<ViewInventory />} />
         <Route path="/manage-categories" element={<ManageCategories />} />
+        <Route path="/stock-movement" element={<StockMovement />} /> 
       </Routes>
     </Router>
   );

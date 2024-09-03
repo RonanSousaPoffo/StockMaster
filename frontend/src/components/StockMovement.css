@@ -1,0 +1,62 @@
+.stock-movement-container {
+    text-align: center;
+    padding: 40px;
+  }
+  
+  .movement-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .movement-form input, .movement-form select, .movement-form button {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .movement-form button {
+    background-color: #6a0dad; /* Roxo */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .movement-form button:hover {
+    background-color: #5e009b; /* Roxo mais escuro */
+  }
+  
+  .movement-list {
+    margin-top: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .movement-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .movement-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .movement-list {
+    max-height: 400px; /* Ajuste conforme necessário */
+    overflow-y: auto;
+  }
+  
+  .filter-container {
+    margin-bottom: 20px;
+  }
+  
+  .filter-container input,
+  .filter-container select {
+    margin-right: 10px;
+  }
+  

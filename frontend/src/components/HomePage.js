@@ -1,8 +1,7 @@
-// src/components/HomePage.js
 import React from 'react';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../firebaseConfig'; // Certifique-se de que o caminho está correto
+import { auth } from '../firebaseConfig'; 
 import './HomePage.css';
 
 const HomePage = () => {
@@ -19,11 +18,12 @@ const HomePage = () => {
 
   return (
     <div className="home-container">
-      <h1>Bem-vindo ao StockMaster</h1>
+      <h1>StockMaster</h1>
       <div className="options-container">
         <button className="option-button" onClick={() => navigate('/add-item')}>Adicionar Item</button>
         <button className="option-button" onClick={() => navigate('/view-inventory')}>Visualizar Estoque</button>
         <button className="option-button" onClick={() => navigate('/manage-categories')}>Gerenciar Categorias</button>
+        <button className="option-button" onClick={() => navigate('/stock-movement')}>Controle de Entrada/Saída</button>
         <button className="logout-button" onClick={handleLogout}>Deslogar</button>
       </div>
     </div>

@@ -36,27 +36,27 @@
   box-sizing: border-box;
 }
 
+
+
 /* Estilos para a seleção de categorias */
 .category-selection {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
   position: relative;
+  
 }
 
 /* Estilos para o botão de adicionar categoria */
-.add-category-button {
+button.add-category-button {
   margin-left: 10px;
+  margin-bottom: 31px;
   padding: 10px;
   background-color: #6a0dad;
   color: #fff;
-  border: none;
   border-radius: 4px;
-  cursor: pointer;
-  display: flex;
   justify-content: center;
-  align-items: center;
-  height: 40px; /* Alinha verticalmente com o campo de seleção */
+  align-items: none;
+  height: 38px; /* Alinha verticalmente com o campo de seleção */
 }
 
 /* Estilos para os botões de ação */

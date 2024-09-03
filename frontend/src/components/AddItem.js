@@ -5,7 +5,6 @@ import { collection, addDoc, getDocs } from 'firebase/firestore'; // Importa fun
 
 const AddItem = () => {
   const [itemName, setItemName] = useState('');
-  const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
   const [newCategory, setNewCategory] = useState('');
@@ -42,14 +41,12 @@ const AddItem = () => {
     try {
       await addDoc(collection(db, 'items'), { // Adiciona um novo documento na coleção 'items'
         name: itemName,
-        quantity: parseInt(quantity, 10),
         price: parseFloat(price),
         category,
       });
       alert('Item salvo com sucesso!');
       // Limpar os campos após salvar
       setItemName('');
-      setQuantity('');
       setPrice('');
       setCategory('');
     } catch (err) {
@@ -70,14 +67,6 @@ const AddItem = () => {
           type="text"
           value={itemName}
           onChange={(e) => setItemName(e.target.value)}
-          required
-        />
-
-        <label>Quantidade:</label>
-        <input
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
           required
         />
 
@@ -108,13 +97,13 @@ const AddItem = () => {
             className="add-category-button"
             onClick={() => setIsModalOpen(true)}
           >
-            +
+           +
           </button>
         </div>
 
         <div className="form-actions">
           <button type="button" className="back-button" onClick={handleBack}>
-            Voltar
+            Voltar (Cancelar)
           </button>
           <button type="submit" className="save-item-button">
             Salvar Item

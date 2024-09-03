@@ -1,37 +1,50 @@
-/* src/components/HomePage.css */
 .home-container {
-    text-align: center;
-    padding: 40px;
-  }
-  
-  .options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 300px;
-    margin: 0 auto;
-  }
-  
-  .option-button, .logout-button {
-    padding: 15px;
-    font-size: 18px;
-    color: #fff;
-    background-color: #6a0dad; /* Roxo */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .option-button:hover, .logout-button:hover {
-    background-color: #5e009b; /* Roxo mais escuro */
-  }
-  
-  .logout-button {
-    background-color: #e63946; /* Vermelho */
-  }
-  
-  .logout-button:hover {
-    background-color: #d62839; /* Vermelho mais escuro */
-  }
-  
+  text-align: center;
+  padding: 40px;
+  background: #f4f4f9; /* Cor de fundo suave */
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif; /* Fonte moderna */
+  font-size: 3rem; /* Tamanho maior */
+  color: #6a0dad; /* Cor roxa */
+  background: -webkit-linear-gradient(#6a0dad, #9b59b6); /* Gradiente roxo */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra no texto */
+  margin-bottom: 40px;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.option-button, .logout-button {
+  padding: 15px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #6a0dad; /* Roxo */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.option-button:hover, .logout-button:hover {
+  background-color: #5e009b; /* Roxo mais escuro */
+  transform: scale(1.05); /* Aumenta um pouco o tamanho do botão */
+}
+
+.logout-button {
+  background-color: #e63946; /* Vermelho */
+}
+
+.logout-button:hover {
+  background-color: #d62839; /* Vermelho mais escuro */
+}
+
+
