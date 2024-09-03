@@ -85,10 +85,10 @@ const Login = () => {
         {error && <p className="error-message">{error}</p>}
         <p className="forgot-password" onClick={handleForgotPassword}>Esqueceu a senha?</p>
         <button type="submit" className="login-button">Entrar</button>
-        <button type="button" onClick={handleGoogleLogin} className="google-login-button">
+        {/*<button type="button" onClick={handleGoogleLogin} className="google-login-button">
           <i className="fab fa-google"></i>
           Entrar com Google
-        </button>
+        </button>*/}
         <p className="create-account-text">
           Não tem uma conta? <span className="create-account-link" onClick={handleSignUp}>Crie sua conta</span>
         </p>

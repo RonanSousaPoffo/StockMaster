@@ -8,6 +8,7 @@ import AddItem from './components/AddItem';
 import ViewInventory from './components/ViewInventory';
 import ManageCategories from './components/ManageCategories';
 import StockMovement from './components/StockMovement';
+import UserManagement from './components/UserManagement'; // Adicione esta linha
 
 const App = () => {
   return (
@@ -18,7 +19,8 @@ const App = () => {
         <Route path="/add-item" element={<AddItem />} />
         <Route path="/view-inventory" element={<ViewInventory />} />
         <Route path="/manage-categories" element={<ManageCategories />} />
-        <Route path="/stock-movement" element={<StockMovement />} /> 
+        <Route path="/stock-movement" element={<StockMovement />} />
+        <Route path="/user-management" element={<UserManagement />} /> {/* Adicione esta linha */}
       </Routes>
     </Router>
   );
