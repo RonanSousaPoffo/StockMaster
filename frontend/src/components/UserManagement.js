@@ -111,7 +111,7 @@ const UserManagement = () => {
       if (userAuth && userAuth.uid === userId) {
         await deleteUser(userAuth);
       } else {
-        setDeleteError("Erro: Não foi possível encontrar o usuário para exclusão.");
+        setDeleteError("Foram realizadas apenas a remoção de permissão do usuário para completar a exclusão entre em contato com o administrador do sistema informando qual usuário deve ser excluído..");
         return;
       }
 
@@ -120,6 +120,7 @@ const UserManagement = () => {
       console.error("Erro ao excluir usuário:", error);
       setDeleteError(`Erro ao excluir usuário: ${error.message}`);
     }
+   
   };
 
   return (
