@@ -230,3 +230,19 @@ button.toggle-totals-button {
   transform: translateX(-50%);
   z-index: 1000; /* Garante que o tooltip fique sobre outros elementos */
 }
+
+/* Estilo para o botão de excluir */
+button.delete-item-button {
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+button.delete-item-button:hover {
+  background-color: #c0392b;
+}

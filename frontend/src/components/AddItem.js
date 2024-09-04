@@ -43,6 +43,7 @@ const AddItem = () => {
         name: itemName,
         price: parseFloat(price),
         category,
+        quantity:0,
       });
       alert('Item salvo com sucesso!');
       // Limpar os campos após salvar

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebaseConfig';
-import { collection, getDocs, updateDoc, doc, addDoc } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc, addDoc, deleteDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth'; // Importar getAuth para obter o usuário autenticado
 import './ViewInventory.css';
 
 const ViewInventory = () => {
@@ -96,6 +97,44 @@ const ViewInventory = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    if (window.confirm('Tem certeza de que deseja excluir este item?')) {
+      try {
+        // Obter o usuário autenticado
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        // Encontrar o item que será excluído
+        const itemToDelete = items.find(item => item.id === id);
+        
+        if (!itemToDelete) {
+          throw new Error('Item não encontrado');
+        }
+
+        // Excluindo o item do Firestore
+        await deleteDoc(doc(db, 'items', id));
+
+        // Adicionando log de exclusão
+        await addDoc(collection(db, 'deleteLogs'), {
+          itemId: id,
+          name: itemToDelete.name,
+          quantity: itemToDelete.quantity,
+          price: itemToDelete.price,
+          category: itemToDelete.category,
+          deletedBy: user ? user.email : 'Usuário não autenticado',
+          timestamp: new Date()
+        });
+
+        // Atualizando a lista de itens após a exclusão
+        const updatedItems = items.filter(item => item.id !== id);
+        setItems(updatedItems);
+        setFilteredItems(updatedItems);
+      } catch (error) {
+        console.error('Erro ao excluir item:', error);
+      }
+    }
+  };
+
   const totalStockValue = filteredItems.reduce((total, item) => total + (item.quantity * item.price), 0);
 
   return (
@@ -141,6 +180,7 @@ const ViewInventory = () => {
                     {showTotals && <td>{(item.quantity * item.price).toFixed(2)}</td>}
                     <td>
                       <button onClick={() => openEditModal(item)}>Editar</button>
+                      <button onClick={() => handleDelete(item.id)} className="delete-item-button">Excluir</button>
                     </td>
                   </tr>
                 ))
@@ -170,17 +210,16 @@ const ViewInventory = () => {
               value={editedItem.name}
               onChange={handleEditChange}
             />
-      <label>Quantidade:</label>
-      <input
-      type="number"
-      name="quantity"
-      value={editedItem.quantity}
-      onChange={handleEditChange}
-      className="quantity-disabled"
-      title="Este campo só pode ser editado na tela de movimentações"
-      disabled
-      />
-
+            <label>Quantidade:</label>
+            <input
+              type="number"
+              name="quantity"
+              value={editedItem.quantity}
+              onChange={handleEditChange}
+              className="quantity-disabled"
+              title="Este campo só pode ser editado na tela de movimentações"
+              disabled
+            />
             <label>Preço:</label>
             <input
               type="number"

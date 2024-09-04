@@ -20,52 +20,48 @@ const StockMovement = () => {
 
   useEffect(() => {
     const fetchItems = async () => {
-      const q = query(collection(db, 'items'), orderBy('name'));
-      const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setItems(data);
-      setFilteredItems(data);
-      
-      // Update categories based on fetched items
-      const uniqueCategories = Array.from(new Set(data.map(item => item.category).filter(cat => cat)));
-      setCategories(uniqueCategories);
-    };
-
-    const fetchCategories = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'categories'));
-        const categoriesList = querySnapshot.docs.map(doc => doc.data().name);
-        setCategories(categoriesList);
+        const q = query(collection(db, 'items'), orderBy('name'));
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setItems(data);
+        setFilteredItems(data);
+
+        const uniqueCategories = Array.from(new Set(data.map(item => item.category).filter(cat => cat)));
+        setCategories(uniqueCategories);
       } catch (error) {
-        console.error('Erro ao carregar categorias:', error);
+        console.error('Erro ao carregar itens:', error);
       }
     };
 
     fetchItems();
-    fetchCategories();
   }, []);
 
   useEffect(() => {
     const fetchMovements = async () => {
-      let q = query(collection(db, 'movements'), orderBy('timestamp', 'desc'));
+      try {
+        let q = query(collection(db, 'movements'), orderBy('timestamp', 'desc'));
 
-      if (filters.itemName) {
-        q = query(q, where('item', '>=', filters.itemName), where('item', '<=', filters.itemName + '\uf8ff'));
-      }
-      if (filters.startDate) {
-        q = query(q, where('timestamp', '>=', new Date(filters.startDate)));
-      }
-      if (filters.endDate) {
-        q = query(q, where('timestamp', '<=', new Date(filters.endDate)));
-      }
-      if (filters.category) {
-        const categoryItems = items.filter(item => item.category === filters.category).map(item => item.name);
-        q = query(q, where('item', 'in', categoryItems));
-      }
+        if (filters.itemName) {
+          q = query(q, where('item', '>=', filters.itemName), where('item', '<=', filters.itemName + '\uf8ff'));
+        }
+        if (filters.startDate) {
+          q = query(q, where('timestamp', '>=', new Date(filters.startDate)));
+        }
+        if (filters.endDate) {
+          q = query(q, where('timestamp', '<=', new Date(filters.endDate)));
+        }
+        if (filters.category) {
+          const categoryItems = items.filter(item => item.category === filters.category).map(item => item.name);
+          q = query(q, where('item', 'in', categoryItems));
+        }
 
-      const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setMovements(data);
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setMovements(data);
+      } catch (error) {
+        console.error('Erro ao carregar movimentações:', error);
+      }
     };
 
     fetchMovements();
@@ -74,21 +70,34 @@ const StockMovement = () => {
   const handleAddMovement = async (e) => {
     e.preventDefault();
     try {
+      if (isNaN(quantity) || quantity <= 0) {
+        throw new Error("Quantidade inválida");
+      }
+
+      // Adiciona movimentação
       await addDoc(collection(db, 'movements'), {
         item,
         quantity,
         type,
         timestamp: new Date()
       });
+
+      // Atualiza a quantidade do item
       const itemDoc = await getDocs(query(collection(db, 'items'), where('name', '==', item)));
       const itemData = itemDoc.docs[0]?.data();
       if (itemData) {
-        const newQuantity = type === 'entrada' ? itemData.quantity + quantity : itemData.quantity - quantity;
+        const currentQuantity = itemData.quantity || 0;
+        const newQuantity = type === 'entrada' ? currentQuantity + quantity : currentQuantity - quantity;
         await updateDoc(doc(db, 'items', itemDoc.docs[0].id), { quantity: newQuantity });
+        
+        // Atualiza a lista de movimentações e limpa os campos
         setItem('');
         setQuantity(0);
         setType('entrada');
         setMovements([{ item, quantity, type, timestamp: new Date() }, ...movements]);
+      } else {
+        // Item não encontrado, pode ser necessário adicionar uma lógica para lidar com isso
+        console.error('Item não encontrado na atualização');
       }
     } catch (error) {
       console.error("Erro ao adicionar movimentação:", error.message);
@@ -130,6 +139,15 @@ const StockMovement = () => {
     setFilteredItems(items);
   };
 
+  const handleQuantityChange = (e) => {
+    const value = parseFloat(e.target.value);
+    if (!isNaN(value)) {
+      setQuantity(value);
+    } else {
+      setQuantity(0);
+    }
+  };
+
   return (
     <div className="stock-movement-container">
       <h1>Controle de Entrada e Saída de Itens</h1>
@@ -153,7 +171,7 @@ const StockMovement = () => {
           type="number"
           placeholder="Quantidade"
           value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={handleQuantityChange}
           required
         />
         <select value={type} onChange={(e) => setType(e.target.value)} required>
@@ -207,7 +225,7 @@ const StockMovement = () => {
               <li key={movement.id}>
                 <span>{new Date(movement.timestamp.seconds * 1000).toLocaleString()} - </span>
                 <span>{movement.item} - </span>
-                <span>{movement.quantity} unidades - </span>
+                <span>{isNaN(movement.quantity) ? 'Quantidade inválida' : `${movement.quantity} unidades`} - </span>
                 <span>{movement.type === 'entrada' ? 'Entrada' : 'Saída'}</span>
               </li>
             ))
