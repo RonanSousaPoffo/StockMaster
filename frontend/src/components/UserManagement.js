@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../firebaseConfig"; 
 import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from "firebase/firestore";
-import { createUserWithEmailAndPassword, deleteUser } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword } from "firebase/auth";
 import "./UserManagement.css";
 
 const UserManagement = () => {
@@ -20,14 +20,17 @@ const UserManagement = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const adminId = getAdminId(); // Pega o ID do administrador
+        const adminId = getAdminId();
         if (!adminId) {
           setError("Usuário não autenticado.");
           return;
         }
 
-        // Consulta para pegar apenas os usuários secundários
-        const usersQuery = query(collection(db, "users"), where("isSecondary", "==", true), where("adminId", "==", adminId));
+        const usersQuery = query(
+          collection(db, "users"),
+          where("isSecondary", "==", true),
+          where("adminId", "==", adminId)
+        );
         const querySnapshot = await getDocs(usersQuery);
         const usersList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -56,21 +59,27 @@ const UserManagement = () => {
     }
 
     try {
-      const adminId = getAdminId(); // Pega o ID do administrador
-      if (!adminId) {
-        setError("Não foi possível identificar o administrador.");
+      const admin = auth.currentUser;
+      const adminEmail = admin.email;
+      const adminPassword = prompt("Confirme sua senha de administrador:");
+
+      if (!adminPassword) {
+        setError("É necessário confirmar a senha do administrador.");
         setLoading(false);
         return;
       }
 
-      // Cria uma nova conta no Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, newUserEmail, "senha-padrao123"); // Senha padrão
+      // Cria uma nova conta no Firebase Auth sem efetuar o login
+      const userCredential = await createUserWithEmailAndPassword(auth, newUserEmail, "senha-padrao123");
+
+      // Restaura a sessão do administrador
+      await signInWithEmailAndPassword(auth, adminEmail, adminPassword);
 
       // Adiciona o novo usuário no Firestore como uma conta secundária
       await addDoc(collection(db, "users"), {
         email: newUserEmail,
         isSecondary: true,
-        adminId: adminId, // Relaciona com o administrador
+        adminId: admin.uid,
       });
 
       setUsers([...users, { id: userCredential.user.uid, email: newUserEmail, isSecondary: true }]);
@@ -86,30 +95,26 @@ const UserManagement = () => {
   const handleDeleteUser = async (userId) => {
     setDeleteError("");
     try {
-      // Obtém o e-mail do usuário a ser excluído
-      const userToDelete = users.find(user => user.id === userId);
+      const userToDelete = users.find((user) => user.id === userId);
       if (!userToDelete) {
         setDeleteError("Erro: Usuário não encontrado.");
         return;
       }
 
-      // Exclui o documento do Firestore
       const userQuery = query(collection(db, "users"), where("email", "==", userToDelete.email));
       const querySnapshot = await getDocs(userQuery);
       querySnapshot.forEach(async (doc) => {
         await deleteDoc(doc.ref);
       });
 
-      // Exclui o usuário do Firebase Auth
-      const authUser = auth.currentUser;
-      if (authUser && authUser.uid === userId) {
-        await deleteUser(authUser);
+      const userAuth = await auth.currentUser;
+      if (userAuth && userAuth.uid === userId) {
+        await deleteUser(userAuth);
       } else {
         setDeleteError("Erro: Não foi possível encontrar o usuário para exclusão.");
         return;
       }
 
-      // Atualiza a lista de usuários localmente
       setUsers(users.filter((user) => user.id !== userId));
     } catch (error) {
       console.error("Erro ao excluir usuário:", error);
