@@ -1,12 +1,14 @@
+/* Container principal da página */
 .home-container {
   text-align: center;
   padding: 40px;
-  background: #f4f4f9; /* Cor de fundo suave */
+  background: #f4f4f9; /* Fundo suave */
 }
 
+/* Título principal */
 h1 {
   font-family: 'Roboto', sans-serif; /* Fonte moderna */
-  font-size: 3rem; /* Tamanho maior */
+  font-size: 3rem; /* Tamanho grande */
   color: #6a0dad; /* Cor roxa */
   background: -webkit-linear-gradient(#6a0dad, #9b59b6); /* Gradiente roxo */
   -webkit-background-clip: text;
@@ -15,6 +17,7 @@ h1 {
   margin-bottom: 40px;
 }
 
+/* Contêiner das opções */
 .options-container {
   display: flex;
   flex-direction: column;
@@ -23,28 +26,231 @@ h1 {
   margin: 0 auto;
 }
 
+/* Estilização para botões principais e logout */
 .option-button, .logout-button {
   padding: 15px;
   font-size: 18px;
   color: #fff;
-  background-color: #6a0dad; /* Roxo */
+  background-color: #6a0dad; /* Cor roxa */
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
 }
 
+/* Efeito hover para botões */
 .option-button:hover, .logout-button:hover {
   background-color: #5e009b; /* Roxo mais escuro */
-  transform: scale(1.05); /* Aumenta um pouco o tamanho do botão */
+  transform: scale(1.05); /* Leve aumento ao passar o mouse */
 }
 
+/* Estilização específica para o botão de logout */
 .logout-button {
-  background-color: #e63946; /* Vermelho */
+  background-color: #e63946; /* Cor vermelha */
 }
 
 .logout-button:hover {
   background-color: #d62839; /* Vermelho mais escuro */
 }
 
+/* Estilização para o modal de fundo */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
+/* Caixa do modal */
+.modal {
+  background-color: #fff;
+  padding: 40px; /* Espaço interno do modal aumentado */
+  border-radius: 8px;
+  width: 80%; /* Largura ajustada para 80% da tela */
+  max-width: 1200px; /* Largura máxima aumentada */
+  max-height: 90vh; /* Altura máxima aumentada */
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Espaçamento entre os itens do modal */
+}
+
+/* Estilização dos itens no modal */
+.log-content ul {
+  list-style-type: none; /* Remove bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.log-content li {
+  border-bottom: 1px solid #ddd; /* Linha divisória */
+  padding: 20px 0; /* Espaçamento vertical aumentado */
+  margin-bottom: 20px; /* Espaçamento entre itens aumentado */
+  display: flex;
+  flex-direction: column;
+}
+
+.log-content strong {
+  display: inline-block;
+  width: 200px; /* Largura fixa aumentada para alinhamento */
+  text-align: left;
+  font-weight: bold;
+}
+
+.log-content p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilização do botão de fechar modal */
+.close-modal-button {
+  margin-top: 20px;
+  padding: 15px; /* Aumentado para melhor visualização */
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.close-modal-button:hover {
+  background-color: #5e009b;
+  transform: scale(1.05);
+}
+
+/* Estilização do botão de menu dentro do modal */
+.menu-button {
+  padding: 15px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #6a0dad; /* Cor roxa */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.menu-button:hover {
+  background-color: #5e009b; /* Roxo mais escuro */
+  transform: scale(1.05);
+}
+
+/* Adicionando animação ao passar o mouse sobre os botões */
+.option-button, .logout-button, .modal-option-button, .menu-button {
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.option-button:active, .logout-button:active, .modal-option-button:active, .menu-button:active {
+  transform: scale(0.95); /* Efeito de clique */
+}
+
+/* Estilização para o modal de fundo */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Caixa do modal */
+.modal {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estilização para o formulário de filtros */
+.filter-container {
+  margin-bottom: 20px;
+}
+
+.filter-container input {
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: calc(25% - 22px); /* Ajuste para largura do input e espaçamento */
+}
+
+.apply-filters-button {
+  padding: 10px;
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.apply-filters-button:hover {
+  background-color: #5e009b;
+  transform: scale(1.05);
+}
+
+/* Estilização dos itens no modal */
+.log-content ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.log-content li {
+  border-bottom: 1px solid #ddd;
+  padding: 20px 0;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens se ajustem em várias linhas */
+  gap: 10px; /* Espaçamento entre itens */
+}
+
+.log-content strong {
+  width: 200px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.log-content p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilização do botão de fechar modal */
+.close-modal-button {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.close-modal-button:hover {
+  background-color: #5e009b;
+  transform: scale(1.05);
+}
