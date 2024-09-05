@@ -246,3 +246,58 @@ button.delete-item-button {
 button.delete-item-button:hover {
   background-color: #c0392b;
 }
+.view-inventory-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ajusta a altura ao viewport */
+  box-sizing: border-box;
+}
+
+.inventory-table-container {
+  flex: 1;
+  overflow-y: auto; /* Adiciona rolagem vertical */
+  margin-top: 20px;
+  max-height: calc(100vh - 200px); /* Controla a altura máxima da tabela */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+button.toggle-totals-button {
+  margin: 10px 0;
+}
+
+.total-stock-value {
+  margin-top: 20px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
