@@ -190,6 +190,7 @@ const StockMovement = () => {
           value={filters.itemName}
           onChange={handleFilterChange}
         />
+         <label>Data Inicial:</label>
         <input
           type="date"
           name="startDate"
@@ -197,6 +198,7 @@ const StockMovement = () => {
           value={filters.startDate}
           onChange={handleFilterChange}
         />
+        <label>Data Final:</label>
         <input
           type="date"
           name="endDate"
@@ -206,15 +208,18 @@ const StockMovement = () => {
         />
         <select
           name="category"
+          className="category-select"
           value={filters.category}
           onChange={handleFilterChange}
         >
-          <option value="">Selecione uma Categoria</option>
-          {categories.map((cat, index) => (
-            <option key={index} value={cat}>{cat}</option>
-          ))}
-        </select>
+       <option value="">Categoria</option>
+       {categories.map((cat, index) => (
+       <option key={index} value={cat}>{cat}</option>
+  ))}
+</select>
+        <div className="Limpa-Filtros">
         <button onClick={handleClearFilters}>Limpar Filtros</button>
+        </div>
       </div>
       
       <div className="movement-list">

@@ -85,3 +85,13 @@
     background-color: #c9302c;
   }
   
+  /* Estilo específico para o select com name="category" */
+.category-select {
+  width: 15%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+}
