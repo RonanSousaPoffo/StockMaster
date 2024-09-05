@@ -7,6 +7,7 @@ const AddItem = () => {
   const [itemName, setItemName] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
+  const [categoryID, setCategoryID] = useState(''); // Estado para o ID da categoria
   const [newCategory, setNewCategory] = useState('');
   const [categories, setCategories] = useState([]); // Categorias existentes
   const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
@@ -16,7 +17,10 @@ const AddItem = () => {
   useEffect(() => {
     const loadCategories = async () => {
       const querySnapshot = await getDocs(collection(db, 'categories'));
-      const categoriesList = querySnapshot.docs.map(doc => doc.data().name);
+      const categoriesList = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        name: doc.data().name
+      }));
       setCategories(categoriesList);
     };
     loadCategories();
@@ -25,10 +29,9 @@ const AddItem = () => {
   const handleAddCategory = async () => {
     if (newCategory) {
       try {
-        await addDoc(collection(db, 'categories'), { name: newCategory });
-        setCategories([...categories, newCategory]);
+        const docRef = await addDoc(collection(db, 'categories'), { name: newCategory });
+        setCategories([...categories, { id: docRef.id, name: newCategory }]);
         setNewCategory('');
-        setShowNewCategoryInput(false);
         setIsModalOpen(false); // Fecha o modal após salvar a categoria
       } catch (err) {
         alert('Erro ao adicionar categoria: ' + err.message);
@@ -42,14 +45,16 @@ const AddItem = () => {
       await addDoc(collection(db, 'items'), { // Adiciona um novo documento na coleção 'items'
         name: itemName,
         price: parseFloat(price),
-        category,
-        quantity:0,
+        category, // Salva o nome da categoria
+        categoryID, // Salva o ID da categoria
+        quantity: 0,
       });
       alert('Item salvo com sucesso!');
       // Limpar os campos após salvar
       setItemName('');
       setPrice('');
       setCategory('');
+      setCategoryID(''); // Limpa o ID da categoria
     } catch (err) {
       alert('Erro ao salvar item: ' + err.message);
     }
@@ -82,14 +87,18 @@ const AddItem = () => {
         <label>Categoria:</label>
         <div className="category-selection">
           <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            value={categoryID}
+            onChange={(e) => {
+              const selectedCategory = categories.find(cat => cat.id === e.target.value);
+              setCategory(selectedCategory ? selectedCategory.name : '');
+              setCategoryID(e.target.value); // Salva o ID da categoria selecionada
+            }}
             required
           >
             <option value="">Selecione uma categoria</option>
-            {categories.map((cat, index) => (
-              <option key={index} value={cat}>
-                {cat}
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
               </option>
             ))}
           </select>

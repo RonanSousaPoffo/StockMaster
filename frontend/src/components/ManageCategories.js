@@ -1,7 +1,6 @@
-// src/components/ManageCategories.js
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebaseConfig';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where } from 'firebase/firestore';
 import './ManageCategories.css';
 
 const ManageCategories = () => {
@@ -70,6 +69,15 @@ const ManageCategories = () => {
 
   const handleDeleteCategory = async (id) => {
     try {
+      // Verifica se a categoria está associada a algum item
+      const itemsQuery = query(collection(db, 'items'), where('categoryID', '==', id));
+      const querySnapshot = await getDocs(itemsQuery);
+
+      if (!querySnapshot.empty) {
+        alert('Não é possível excluir esta categoria porque ela está associada a um ou mais itens.');
+        return;
+      }
+
       await deleteDoc(doc(db, 'categories', id));
       setCategories(categories.filter(cat => cat.id !== id));
       console.log('Categoria excluída com sucesso!');
