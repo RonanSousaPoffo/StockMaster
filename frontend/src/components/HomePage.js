@@ -115,6 +115,8 @@ const HomePage = () => {
       {isLogsModalOpen && (
         <div className="modal-overlay">
           <div className="modal">
+              {/* Botão de Fechar no formato de X */}
+              <button className="close-button" onClick={() => setIsLogsModalOpen(false)}>X</button>     
             <h2>Logs de Itens Excluídos</h2>
             <div className="filter-container">
               <h3>Filtros</h3>
@@ -153,7 +155,7 @@ const HomePage = () => {
                 {deleteLogs.length > 0 ? (
                   deleteLogs.map((log, index) => (
                     <li key={index}>
-                      <strong>Item:</strong> {log.name} | <strong>Data:</strong> {new Date(log.timestamp.seconds * 1000).toLocaleString()} | <strong>Usuário:</strong> {log.deletedBy} | <strong>Valor:</strong> {log.price} | <strong>Categoria:</strong> {log.category} | <strong>Quantidade:</strong> {log.quantity}
+                      <strong>Item:</strong> {log.name}  <strong>Data:</strong> {new Date(log.timestamp.seconds * 1000).toLocaleString()}  <strong>Usuário:</strong> {log.deletedBy}  <strong>Valor:</strong> {log.price}  <strong>Categoria:</strong> {log.category}  <strong>Quantidade:</strong> {log.quantity}
                     </li>
                   ))
                 ) : (

@@ -239,18 +239,36 @@ h1 {
 }
 
 /* Estilização do botão de fechar modal */
-.close-modal-button {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #6a0dad;
-  color: white;
+/* Estilização do botão de fechar (X) */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
   border: none;
-  border-radius: 5px;
+  font-size: 20px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
+  color: #6a0dad; /* Cor roxa */
 }
 
-.close-modal-button:hover {
-  background-color: #5e009b;
-  transform: scale(1.05);
+.close-button:hover {
+  color: #5e009b; /* Roxo mais escuro ao passar o mouse */
+  transform: scale(1.1); /* Efeito de leve aumento ao passar o mouse */
 }
+
+/* Ajustes no modal para posicionamento relativo */
+.modal {
+  position: relative; /* Necessário para posicionar o botão dentro do modal */
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
