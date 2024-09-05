@@ -95,8 +95,10 @@ const HomePage = () => {
         <button className="option-button" onClick={() => navigate('/manage-categories')}>Gerenciar Categorias</button>
         <button className="option-button" onClick={() => navigate('/stock-movement')}>Controle de Entrada/Saída</button>
         {isAdmin && (
-          <button className="option-button" onClick={handleOpenLogsMenu}>Ver Logs</button>,
-          <button className="option-button" onClick={() => navigate('/user-management')}>Gerenciar Usuários</button>
+         <>
+           <button className="option-button" onClick={handleOpenLogsMenu}>Ver Logs</button>
+            <button className="option-button" onClick={() => navigate('/user-management')}>Gerenciar Usuários</button>
+         </>
         )}
         <button className="logout-button" onClick={handleLogout}>Deslogar</button>
       </div>
