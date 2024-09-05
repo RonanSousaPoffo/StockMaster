@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../firebaseConfig';
 import { collection, addDoc, getDocs, query, orderBy, where, doc, updateDoc } from 'firebase/firestore';
 import './StockMovement.css';
+import { getAuth } from 'firebase/auth';
 
 const StockMovement = () => {
   const [item, setItem] = useState('');
@@ -110,12 +111,16 @@ const StockMovement = () => {
         const currentQuantity = itemData.quantity || 0;
         const newQuantity = type === 'entrada' ? currentQuantity + quantity : currentQuantity - quantity;
 
+        const auth = getAuth();
+        const user = auth.currentUser;
+
         await addDoc(collection(db, 'movements'), {
           item,
           itemID,
           quantity,
           type,
-          timestamp: new Date()
+          timestamp: new Date(),
+          movimentBy: user ? user.email : 'Usuário não autenticado',
         });
 
         await updateDoc(doc(db, 'items', itemID), { quantity: newQuantity });
@@ -231,6 +236,7 @@ const StockMovement = () => {
                 <strong>Quantidade:</strong> {movement.quantity}
                 <strong>Tipo:</strong> {movement.type === 'entrada' ? 'Entrada' : 'Saída'}
                 <strong>Data/Hora:</strong> {new Date(movement.timestamp.seconds * 1000).toLocaleString()}
+                <strong>Responsável:</strong> <span>{movement.movimentBy}</span>
               </li>
             ))
           ) : (
