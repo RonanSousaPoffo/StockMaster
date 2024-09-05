@@ -159,7 +159,7 @@ const ViewInventory = () => {
           <table>
             <thead>
               <tr>
-                <th>ID</th>
+                {/*<td>{<th>ID</th>*/}
                 <th>Nome</th>
                 <th>Quantidade</th>
                 <th>Preço</th>
@@ -172,7 +172,7 @@ const ViewInventory = () => {
               {filteredItems.length > 0 ? (
                 filteredItems.map(item => (
                   <tr key={item.id}>
-                    <td>{item.id}</td>
+                    {/*<td>{item.id}</td>*/}
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>
                     <td>{item.price.toFixed(2)}</td>
