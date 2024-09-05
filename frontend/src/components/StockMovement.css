@@ -42,8 +42,27 @@
   }
   
   .movement-list li {
-    padding: 10px;
+    padding: 15px; /* Aumenta o padding para mais espaço ao redor do texto */
     border-bottom: 1px solid #ddd;
+    margin-bottom: 15px; /* Adiciona um espaçamento entre os itens */
+    background-color: #fafafa; /* Adiciona um fundo leve para contraste */
+    border-radius: 4px; /* Arredonda os cantos para um visual mais suave */
+    display: flex;
+    flex-direction: column; /* Organiza o conteúdo verticalmente */
+    gap: 5px; /* Espaçamento entre as linhas de texto */
+  }
+
+
+  .movement-list li strong {
+    display: inline-block; /* Faz os labels serem exibidos em linha */
+    width: 120px; /* Ajusta a largura dos labels para alinhamento */
+    font-weight: bold;
+    color: #333; /* Cor dos labels para contraste */
+  }
+
+  .movement-list li span {
+    font-size: 16px; /* Ajusta o tamanho da fonte do texto dos itens */
+    color: #333; /* Define a cor do texto para melhorar a legibilidade */
   }
   
   .movement-list {

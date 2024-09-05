@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../firebaseConfig';
 import { collection, addDoc, getDocs, query, orderBy, where, doc, updateDoc } from 'firebase/firestore';
 import './StockMovement.css';
+import { getAuth } from 'firebase/auth'; // Importar getAuth para obter o usuário autenticado
 
 const StockMovement = () => {
   const [item, setItem] = useState('');
@@ -73,13 +74,17 @@ const StockMovement = () => {
       if (isNaN(quantity) || quantity <= 0) {
         throw new Error("Quantidade inválida");
       }
+       // Obter o usuário autenticado
+       const auth = getAuth();
+       const user = auth.currentUser;
 
       // Adiciona movimentação
       await addDoc(collection(db, 'movements'), {
         item,
         quantity,
         type,
-        timestamp: new Date()
+        timestamp: new Date(),
+        movimentBy: user ? user.email : 'Usuário não autenticado',
       });
 
       // Atualiza a quantidade do item
@@ -228,10 +233,11 @@ const StockMovement = () => {
           {movements.length > 0 ? (
             movements.map(movement => (
               <li key={movement.id}>
-                <span>{new Date(movement.timestamp.seconds * 1000).toLocaleString()} - </span>
-                <span>{movement.item} - </span>
-                <span>{isNaN(movement.quantity) ? 'Quantidade inválida' : `${movement.quantity} unidades`} - </span>
-                <span>{movement.type === 'entrada' ? 'Entrada' : 'Saída'}</span>
+                <strong>Item:</strong> <span>{movement.item}</span>     
+                <strong>Tipo:</strong> <span>{movement.type === 'entrada' ? 'Entrada' : 'Saída'}</span>            
+                <strong>Quantidade:</strong> <span>{isNaN(movement.quantity) ? 'Quantidade inválida' : `${movement.quantity} unidades`}  </span>            
+                <strong>Data/Hora:</strong> <span>{new Date(movement.timestamp.seconds * 1000).toLocaleString()}  </span>    
+                <strong>Responsável:</strong> <span>{movement.movimentBy}</span>                              
               </li>
             ))
           ) : (
