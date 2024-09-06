@@ -181,7 +181,8 @@ const HomePage = () => {
         <div className="modal-overlay">
           <div className="modal">
             <h2>Menu de Clientes</h2>
-            <button className="menu-button" onClick={() => navigate('/register-client')}>Cadastrar Clientes</button> {/* Novo botão para cadastrar clientes */}
+            <button className="menu-button" onClick={() => navigate('/register-client')}>Cadastrar Clientes</button> 
+            <button className="menu-button" onClick={() => navigate('/consult-clients')}>Consultar Clientes</button>
             <button onClick={() => setIsClientsModalOpen(false)}>Fechar</button>
           </div>
         </div>

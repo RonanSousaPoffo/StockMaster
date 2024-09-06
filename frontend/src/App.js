@@ -10,6 +10,7 @@ import ManageCategories from './components/ManageCategories';
 import StockMovement from './components/StockMovement';
 import UserManagement from './components/UserManagement';
 import RegisterClient from './components/RegisterClient';
+import ConsultClients from './components/ConsultClients';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/stock-movement" element={<StockMovement />} />
         <Route path="/user-management" element={<UserManagement />} />
         <Route path="/register-client" element={<RegisterClient />} />
+        <Route path="/consult-clients" element={<ConsultClients />} />
       </Routes>
     </Router>
   );

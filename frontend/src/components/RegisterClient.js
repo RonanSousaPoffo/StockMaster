@@ -17,7 +17,7 @@ const RegisterClient = () => {
     const { name, value } = e.target;
     setClientData({
       ...clientData,
-      [name]: value
+      [name]: value.toUpperCase() // Convertendo para maiúsculas aqui
     });
   };
 
@@ -26,7 +26,14 @@ const RegisterClient = () => {
     setIsSubmitting(true);
 
     try {
-      await addDoc(collection(db, 'clients'), clientData);
+      // Adicionando a transformação para maiúsculas antes de enviar
+      const normalizedData = {
+        name: clientData.name.toUpperCase(),
+        email: clientData.email.toUpperCase(),
+        phone: clientData.phone.toUpperCase(),
+        address: clientData.address.toUpperCase()
+      };
+      await addDoc(collection(db, 'clients'), normalizedData);
       setSuccessMessage('Cliente cadastrado com sucesso!');
       setClientData({
         name: '',
