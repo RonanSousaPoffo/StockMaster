@@ -32,7 +32,7 @@
 
 **Contribuições são bem-vindas!**
 
-*Caso queira utilizar o projeto, será necessário alguns passos:*
+*Caso queira utilizar o projeto, será necessário configurar o acesso ao Firestore:*
 
 * Crie um projeto no Firebase e configure o Firestore.
 * Crie um arquivo .env.local na raiz do projeto com suas credenciais do Firebase:
