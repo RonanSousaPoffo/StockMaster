@@ -12,7 +12,7 @@
 * Controle de estoque de produtos.
 * Registro e acompanhamento de serviços prestados.
 
-**Tecnologias Utilizadas**
+**Tecnologias Utilizadas:**
 
 *Frontend*
 
