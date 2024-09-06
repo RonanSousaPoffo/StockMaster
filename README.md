@@ -29,3 +29,5 @@
 * Firestore: Banco de dados NoSQL em tempo real para armazenar e sincronizar os dados do cliente e estoque.
 * Git: Controle de versão.
 * GitHub: Hospedagem do código-fonte.
+
+**Contribuições são bem-vindas!**
