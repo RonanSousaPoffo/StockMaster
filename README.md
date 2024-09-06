@@ -36,5 +36,6 @@
 
 * Crie um projeto no Firebase e configure o Firestore.
 * Crie um arquivo .env.local na raiz do projeto com suas credenciais do Firebase:
+
  ![image](https://github.com/user-attachments/assets/492c8046-ad1a-4cba-a90e-72db41e263f4)
 
