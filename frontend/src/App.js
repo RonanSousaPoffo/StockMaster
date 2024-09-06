@@ -8,7 +8,8 @@ import AddItem from './components/AddItem';
 import ViewInventory from './components/ViewInventory';
 import ManageCategories from './components/ManageCategories';
 import StockMovement from './components/StockMovement';
-import UserManagement from './components/UserManagement'; // Adicione esta linha
+import UserManagement from './components/UserManagement';
+import RegisterClient from './components/RegisterClient';
 
 const App = () => {
   return (
@@ -20,7 +21,8 @@ const App = () => {
         <Route path="/view-inventory" element={<ViewInventory />} />
         <Route path="/manage-categories" element={<ManageCategories />} />
         <Route path="/stock-movement" element={<StockMovement />} />
-        <Route path="/user-management" element={<UserManagement />} /> {/* Adicione esta linha */}
+        <Route path="/user-management" element={<UserManagement />} />
+        <Route path="/register-client" element={<RegisterClient />} />
       </Routes>
     </Router>
   );

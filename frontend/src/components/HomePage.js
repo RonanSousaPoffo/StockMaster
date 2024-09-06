@@ -9,6 +9,7 @@ const HomePage = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   const [isLogsModalOpen, setIsLogsModalOpen] = useState(false);
+  const [isClientsModalOpen, setIsClientsModalOpen] = useState(false); // Novo estado para o modal de Clientes
   const [deleteLogs, setDeleteLogs] = useState([]);
   const [filters, setFilters] = useState({
     date: '',
@@ -86,6 +87,10 @@ const HomePage = () => {
     }));
   };
 
+  const handleOpenClientsModal = () => {
+    setIsClientsModalOpen(true);
+  };
+
   return (
     <div className="home-container">
       <h1>StockMaster</h1>
@@ -97,7 +102,8 @@ const HomePage = () => {
         {isAdmin && (
          <>
            <button className="option-button" onClick={handleOpenLogsMenu}>Ver Logs</button>
-            <button className="option-button" onClick={() => navigate('/user-management')}>Gerenciar Usuários</button>
+           <button className="option-button" onClick={() => navigate('/user-management')}>Gerenciar Usuários</button>
+           <button className="option-button" onClick={handleOpenClientsModal}>Clientes</button> {/* Novo botão Clientes */}
          </>
         )}
         <button className="logout-button" onClick={handleLogout}>Deslogar</button>
@@ -118,7 +124,6 @@ const HomePage = () => {
       {isLogsModalOpen && (
         <div className="modal-overlay">
           <div className="modal">
-              {/* Botão de Fechar no formato de X */}
               <button className="close-button" onClick={() => setIsLogsModalOpen(false)}>X</button>     
             <h2>Logs de Itens Excluídos</h2>
             <div className="filter-container">
@@ -167,6 +172,17 @@ const HomePage = () => {
               </ul>
               <button onClick={() => setIsLogsModalOpen(false)} className="close-modal-button">Fechar</button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Clientes */}
+      {isClientsModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Menu de Clientes</h2>
+            <button className="menu-button" onClick={() => navigate('/register-client')}>Cadastrar Clientes</button> {/* Novo botão para cadastrar clientes */}
+            <button onClick={() => setIsClientsModalOpen(false)}>Fechar</button>
           </div>
         </div>
       )}
