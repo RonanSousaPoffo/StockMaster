@@ -13,6 +13,8 @@ import RegisterClient from './components/RegisterClient';
 import ConsultClients from './components/ConsultClients';
 import ServiceRegistration from './components/ServiceRegistration';
 import ServiceHistory from './components/ServiceHistory';
+import ServiceLogs from './components/ServiceLogs';
+
 
 const App = () => {
   return (
@@ -29,6 +31,7 @@ const App = () => {
         <Route path="/consult-clients" element={<ConsultClients />} />
         <Route path="/service-registration" element={<ServiceRegistration />} />
         <Route path="/service-history" element={<ServiceHistory />} />
+        <Route path="/service-logs" element={<ServiceLogs />} />
       </Routes>
     </Router>
   );

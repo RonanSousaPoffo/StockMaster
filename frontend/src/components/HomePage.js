@@ -202,6 +202,7 @@ const HomePage = () => {
             <h2>Menu de Serviços</h2>
             <button className="menu-button" onClick={() => navigate('/service-registration')}>Cadastro de Serviços</button>
             <button className="menu-button" onClick={() => navigate('/service-history')}>Histórico de Serviços</button>
+            <button className="menu-button" onClick={() => navigate('/service-logs')}>Log de Serviços</button>
             <button className="close-button" onClick={() => setIsServicesModalOpen(false)}>Fechar</button>
           </div>
         </div>

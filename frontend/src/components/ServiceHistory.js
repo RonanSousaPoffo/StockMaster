@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, doc, updateDoc, deleteDoc, addDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import './ServiceHistory.css';
+import { getAuth } from 'firebase/auth'; // Importar getAuth para obter o usuário autenticado
 
 const ServiceHistory = () => {
   const [services, setServices] = useState([]);
@@ -86,6 +87,9 @@ const ServiceHistory = () => {
   });
 
   const handleDeleteService = async (id) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
     const serviceDocRef = doc(db, 'services', id);
     await deleteDoc(serviceDocRef);
 
@@ -93,7 +97,8 @@ const ServiceHistory = () => {
     await addDoc(collection(db, 'serviceLogs'), {
       action: 'delete',
       serviceId: id,
-      timestamp: new Date()
+      timestamp: new Date(),
+      user: user ? user.email : 'Usuário não autenticado',
     });
 
     alert('Serviço excluído com sucesso!');
