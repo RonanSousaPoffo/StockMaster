@@ -9,7 +9,8 @@ const HomePage = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   const [isLogsModalOpen, setIsLogsModalOpen] = useState(false);
-  const [isClientsModalOpen, setIsClientsModalOpen] = useState(false); // Novo estado para o modal de Clientes
+  const [isClientsModalOpen, setIsClientsModalOpen] = useState(false); // Modal de Clientes
+  const [isServicesModalOpen, setIsServicesModalOpen] = useState(false); // Modal de Serviços
   const [deleteLogs, setDeleteLogs] = useState([]);
   const [filters, setFilters] = useState({
     date: '',
@@ -49,6 +50,7 @@ const HomePage = () => {
   const handleOpenLogsMenu = () => {
     setIsMenuModalOpen(true);
   };
+
 
   const handleOpenDeleteLogs = async () => {
     try {
@@ -91,6 +93,10 @@ const HomePage = () => {
     setIsClientsModalOpen(true);
   };
 
+  const handleOpenServicesModal = () => {
+    setIsServicesModalOpen(true);
+  };
+
   return (
     <div className="home-container">
       <h1>StockMaster</h1>
@@ -99,6 +105,7 @@ const HomePage = () => {
         <button className="option-button" onClick={() => navigate('/view-inventory')}>Visualizar Estoque</button>
         <button className="option-button" onClick={() => navigate('/manage-categories')}>Gerenciar Categorias</button>
         <button className="option-button" onClick={() => navigate('/stock-movement')}>Controle de Entrada/Saída</button>
+        <button className="option-button" onClick={handleOpenServicesModal}>Serviços</button> {/* Novo botão Serviços */}
         {isAdmin && (
          <>
            <button className="option-button" onClick={handleOpenLogsMenu}>Ver Logs</button>
@@ -184,6 +191,18 @@ const HomePage = () => {
             <button className="menu-button" onClick={() => navigate('/register-client')}>Cadastrar Clientes</button> 
             <button className="menu-button" onClick={() => navigate('/consult-clients')}>Consultar Clientes</button>
             <button onClick={() => setIsClientsModalOpen(false)}>Fechar</button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Serviços */}
+      {isServicesModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Menu de Serviços</h2>
+            <button className="menu-button" onClick={() => navigate('/service-registration')}>Cadastro de Serviços</button>
+            <button className="menu-button" onClick={() => navigate('/service-history')}>Histórico de Serviços</button>
+            <button className="close-button" onClick={() => setIsServicesModalOpen(false)}>Fechar</button>
           </div>
         </div>
       )}

@@ -11,6 +11,7 @@ import StockMovement from './components/StockMovement';
 import UserManagement from './components/UserManagement';
 import RegisterClient from './components/RegisterClient';
 import ConsultClients from './components/ConsultClients';
+import ServiceRegistration from './components/ServiceRegistration';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/user-management" element={<UserManagement />} />
         <Route path="/register-client" element={<RegisterClient />} />
         <Route path="/consult-clients" element={<ConsultClients />} />
+        <Route path="/service-registration" element={<ServiceRegistration />} />
       </Routes>
     </Router>
   );

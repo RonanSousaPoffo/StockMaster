@@ -1,0 +1,98 @@
+/* ServiceRegistration.css */
+
+/* Container principal */
+.service-registration-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service-registration-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo do formulário */
+  .service-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .service-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .service-form label {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .service-form input,
+  .service-form select,
+  .service-form textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+  
+  .service-form input:focus,
+  .service-form select:focus,
+  .service-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Estilo do botão de submit */
+  .service-form .submit-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .service-form .submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilo específico para o campo de observações (textarea) */
+  .service-form textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .service-registration-container {
+      padding: 10px;
+    }
+    
+    .service-form .form-group {
+      gap: 15px;
+    }
+    
+    .service-form input,
+    .service-form select,
+    .service-form textarea {
+      font-size: 14px;
+    }
+    
+    .service-form .submit-button {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  }
+  
