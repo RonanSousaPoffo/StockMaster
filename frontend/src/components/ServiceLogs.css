@@ -6,22 +6,56 @@
     margin: 0 auto;
   }
   
-  .service-logs-container .logs-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-height: 500px; /* Define a altura máxima para a área de logs */
-    overflow-y: auto; /* Adiciona a barra de rolagem vertical se o conteúdo exceder a altura máxima */
+  .filters-container {
+    margin-bottom: 20px;
   }
   
-  .service-logs-container .log-item {
+  .filters-container input {
+    margin-right: 10px;
+    padding: 5px;
+  }
+  
+  .filters-container .apply-filters-button,
+  .filters-container .clear-filters-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .filters-container .apply-filters-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .filters-container .apply-filters-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .filters-container .clear-filters-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .filters-container .clear-filters-button:hover {
+    background-color: #c62828;
+  }
+  
+  .logs-list {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  
+  .log-item {
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 8px;
     background-color: #f9f9f9;
+    margin-bottom: 10px;
   }
   
-  .service-logs-container .log-item p {
+  .log-item p {
     margin: 5px 0;
   }
   
