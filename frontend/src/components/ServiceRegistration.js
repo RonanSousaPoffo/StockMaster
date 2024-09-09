@@ -72,11 +72,14 @@ const ServiceRegistration = () => {
     }
 
     try {
+      // Convertendo a data para o formato YYYY-MM-DD
+      const formattedDate = new Date(serviceData.date).toISOString().split('T')[0]; // Formata a data para YYYY-MM-DD
+
       await addDoc(collection(db, 'services'), {
         clientId: selectedClient.id,
         clientName: selectedClient.name,
-        value: serviceData.value,
-        date: new Date(serviceData.date),
+        value: parseFloat(serviceData.value) || 0,
+        date: formattedDate, // Salvando a data formatada
         observations: serviceData.observations,
       });
       alert('Serviço cadastrado com sucesso!');

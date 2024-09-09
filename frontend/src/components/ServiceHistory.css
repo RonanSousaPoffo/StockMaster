@@ -1,0 +1,70 @@
+/* src/ServiceHistory.css */
+
+.service-history-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.service-history-container .filters-container {
+  display: flex;
+  flex-wrap: nowrap; /* Garante que os filtros não se movam para a linha seguinte */
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.service-history-container .filters-container select,
+.service-history-container .filters-container input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  flex: 1; /* Faz com que os filtros se expandam para preencher o espaço disponível */
+  min-width: 120px; /* Define uma largura mínima para os campos */
+  box-sizing: border-box; /* Inclui o padding e a borda no cálculo da largura */
+}
+
+.service-history-container .filters-container input[type="date"],
+.service-history-container .filters-container input[name="clientSearch"] {
+  flex: 1; /* Aumenta a largura dos campos de data e busca de cliente */
+}
+
+.service-history-container .service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 600px; /* Limita a altura da lista de serviços */
+  overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
+}
+
+.service-history-container .service-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.service-history-container .actions {
+  display: flex;
+  gap: 10px;
+}
+
+.service-history-container .actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.service-history-container .actions button:last-child {
+  background-color: #dc3545;
+}
+
+.service-history-container .actions button:hover {
+  opacity: 0.8;
+}
+
+.service-history-container .actions button:active {
+  opacity: 0.6;
+}
