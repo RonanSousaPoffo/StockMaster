@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
-import './ServiceRegistration.css';
+import React, { useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import "./RegisterClient.css";
 
-const ServiceRegistration = () => {
-  const [serviceData, setServiceData] = useState({
-    clientName: '',
-    date: '',
-    description: '',
-    price: ''
+const RegisterClient = () => {
+  const [clientData, setClientData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setServiceData({
-      ...serviceData,
-      [name]: value
+    setClientData({
+      ...clientData,
+      [name]: value.toUpperCase(), // Convertendo para maiúsculas aqui
     });
   };
 
@@ -26,79 +26,72 @@ const ServiceRegistration = () => {
     setIsSubmitting(true);
 
     try {
-      // Convertendo a data para um timestamp em milissegundos
-      const localDate = new Date(serviceData.date).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-      const timestamp = new Date(localDate).getTime(); // Obtendo o timestamp em milissegundos
-
       // Adicionando a transformação para maiúsculas antes de enviar
       const normalizedData = {
-        clientName: serviceData.clientName.toUpperCase(),
-        date: timestamp, // Salvando o timestamp
-        description: serviceData.description.toUpperCase(),
-        price: parseFloat(serviceData.price) || 0
+        name: clientData.name.toUpperCase(),
+        email: clientData.email.toUpperCase(),
+        phone: clientData.phone.toUpperCase(),
+        address: clientData.address.toUpperCase(),
       };
-
-      await addDoc(collection(db, 'services'), normalizedData);
-      setSuccessMessage('Serviço cadastrado com sucesso!');
-      setServiceData({
-        clientName: '',
-        date: '',
-        description: '',
-        price: ''
+      await addDoc(collection(db, "clients"), normalizedData);
+      setSuccessMessage("Cliente cadastrado com sucesso!");
+      setClientData({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
       });
     } catch (err) {
-      console.error('Erro ao cadastrar serviço:', err.message);
-      setSuccessMessage('Erro ao cadastrar serviço, tente novamente.');
+      console.error("Erro ao cadastrar cliente:", err.message);
+      setSuccessMessage("Erro ao cadastrar cliente, tente novamente.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="service-registration-container">
-      <h2>Cadastrar Serviço</h2>
-      <form onSubmit={handleSubmit} className="service-registration-form">
+    <div className="register-client-container">
+      <h2>Cadastrar Cliente</h2>
+      <form onSubmit={handleSubmit} className="register-client-form">
         <label>
-          Nome do Cliente:
+          Nome:
           <input
             type="text"
-            name="clientName"
-            value={serviceData.clientName}
+            name="name"
+            value={clientData.name}
             onChange={handleChange}
             required
           />
         </label>
         <label>
-          Data:
+          Email:
           <input
-            type="datetime-local"
-            name="date"
-            value={serviceData.date}
+            type="email"
+            name="email"
+            value={clientData.email}
             onChange={handleChange}
-            required
           />
         </label>
         <label>
-          Descrição:
+          Telefone:
+          <input
+            type="tel"
+            name="phone"
+            value={clientData.phone}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Endereço:
           <input
             type="text"
-            name="description"
-            value={serviceData.description}
+            name="address"
+            value={clientData.address}
             onChange={handleChange}
-          />
-        </label>
-        <label>
-          Preço:
-          <input
-            type="number"
-            name="price"
-            value={serviceData.price}
-            onChange={handleChange}
-            step="0.01"
           />
         </label>
         <button type="submit" className="submit-button" disabled={isSubmitting}>
-          {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
+          {isSubmitting ? "Cadastrando..." : "Cadastrar"}
         </button>
       </form>
       {successMessage && <p className="success-message">{successMessage}</p>}
@@ -106,4 +99,4 @@ const ServiceRegistration = () => {
   );
 };
 
-export default ServiceRegistration;
+export default RegisterClient;
