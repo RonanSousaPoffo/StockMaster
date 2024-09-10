@@ -56,10 +56,29 @@ const ConsultClients = () => {
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      [name]: value
-    }));
+    if (name === 'cpfCnpj') {
+      setFilters(prevFilters => ({
+        ...prevFilters,
+        [name]: formatCpfCnpj(value) 
+      }));
+    } else {
+      setFilters(prevFilters => ({
+        ...prevFilters,
+        [name]: value
+      }));
+    }
+  };
+
+  const formatCpfCnpj = (value) => {
+    value = value.replace(/\D/g, ""); 
+    if (value.length <= 11) {
+      // Formatação para CPF
+      value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    } else {
+      // Formatação para CNPJ
+      value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+    }
+    return value;
   };
 
   const handleEditClick = (client) => {
@@ -96,6 +115,14 @@ const ConsultClients = () => {
         console.error("Erro ao atualizar cliente:", err.message);
       }
     }
+  };
+
+  const handleCpfCnpjChange = (e) => {
+    const { value } = e.target;
+    setEditingClient({
+      ...editingClient,
+      cpfCnpj: formatCpfCnpj(value) 
+    });
   };
 
   return (
@@ -198,7 +225,7 @@ const ConsultClients = () => {
             <input
               type="text"
               value={editingClient.cpfCnpj}
-              onChange={(e) => setEditingClient({ ...editingClient, cpfCnpj: e.target.value })}
+              onChange={handleCpfCnpjChange} // Usando a máscara na edição do CPF/CNPJ
               placeholder="CPF/CNPJ"
             />
             <button onClick={handleSaveChanges}>Salvar</button>
