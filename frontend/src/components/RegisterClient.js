@@ -9,6 +9,7 @@ const RegisterClient = () => {
     email: "",
     phone: "",
     address: "",
+    cpfCnpj: "", // Novo campo para CPF/CNPJ
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -17,7 +18,26 @@ const RegisterClient = () => {
     const { name, value } = e.target;
     setClientData({
       ...clientData,
-      [name]: value.toUpperCase(), // Convertendo para maiúsculas aqui
+      [name]: value.toUpperCase(), // Convertendo para maiúsculas
+    });
+  };
+
+  const handleCpfCnpjChange = (e) => {
+    let { value } = e.target;
+    value = value.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
+    if (value.length <= 11) {
+      // Formatação para CPF
+      value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    } else {
+      // Formatação para CNPJ
+      value = value.replace(
+        /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+        "$1.$2.$3/$4-$5"
+      );
+    }
+    setClientData({
+      ...clientData,
+      cpfCnpj: value,
     });
   };
 
@@ -32,6 +52,7 @@ const RegisterClient = () => {
         email: clientData.email.toUpperCase(),
         phone: clientData.phone.toUpperCase(),
         address: clientData.address.toUpperCase(),
+        cpfCnpj: clientData.cpfCnpj, // Não aplicar toUpperCase para CPF/CNPJ
       };
       await addDoc(collection(db, "clients"), normalizedData);
       setSuccessMessage("Cliente cadastrado com sucesso!");
@@ -40,6 +61,7 @@ const RegisterClient = () => {
         email: "",
         phone: "",
         address: "",
+        cpfCnpj: "", // Resetar campo CPF/CNPJ
       });
     } catch (err) {
       console.error("Erro ao cadastrar cliente:", err.message);
@@ -88,6 +110,15 @@ const RegisterClient = () => {
             name="address"
             value={clientData.address}
             onChange={handleChange}
+          />
+        </label>
+        <label>
+          CPF/CNPJ:
+          <input
+            type="text"
+            name="cpfCnpj"
+            value={clientData.cpfCnpj}
+            onChange={handleCpfCnpjChange}
           />
         </label>
         <button type="submit" className="submit-button" disabled={isSubmitting}>
