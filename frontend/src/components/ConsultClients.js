@@ -9,7 +9,8 @@ const ConsultClients = () => {
     name: '',
     email: '',
     phone: '',
-    address: ''
+    address: '',
+    cpfCnpj: '' // Novo campo para CPF/CNPJ no filtro
   });
   const [editingClient, setEditingClient] = useState(null);
 
@@ -46,6 +47,10 @@ const ConsultClients = () => {
       filterQueries.push(where('address', '>=', filters.address.toUpperCase()));
       filterQueries.push(where('address', '<=', filters.address.toUpperCase() + '\uf8ff'));
     }
+    if (filters.cpfCnpj) {
+      filterQueries.push(where('cpfCnpj', '>=', filters.cpfCnpj));
+      filterQueries.push(where('cpfCnpj', '<=', filters.cpfCnpj + '\uf8ff'));
+    }
     return filterQueries;
   };
 
@@ -73,13 +78,13 @@ const ConsultClients = () => {
   const handleSaveChanges = async () => {
     if (editingClient) {
       try {
-        // Transformando os dados em maiúsculas antes de atualizar
         const updatedClient = {
           ...editingClient,
           name: editingClient.name.toUpperCase(),
           email: editingClient.email.toUpperCase(),
           phone: editingClient.phone.toUpperCase(),
-          address: editingClient.address.toUpperCase()
+          address: editingClient.address.toUpperCase(),
+          cpfCnpj: editingClient.cpfCnpj // Mantendo o CPF/CNPJ no formato atual
         };
         await updateDoc(doc(db, 'clients', editingClient.id), updatedClient);
         setEditingClient(null);
@@ -125,6 +130,13 @@ const ConsultClients = () => {
           onChange={handleFilterChange}
           placeholder="Endereço"
         />
+        <input
+          type="text"
+          name="cpfCnpj"
+          value={filters.cpfCnpj}
+          onChange={handleFilterChange}
+          placeholder="CPF/CNPJ"
+        />
       </div>
       <table>
         <thead>
@@ -133,6 +145,7 @@ const ConsultClients = () => {
             <th>Email</th>
             <th>Telefone</th>
             <th>Endereço</th>
+            <th>CPF/CNPJ</th> 
             <th>Ações</th>
           </tr>
         </thead>
@@ -143,6 +156,7 @@ const ConsultClients = () => {
               <td>{client.email}</td>
               <td>{client.phone}</td>
               <td>{client.address}</td>
+              <td>{client.cpfCnpj}</td> 
               <td>
                 <button className="action-button edit" onClick={() => handleEditClick(client)}>Editar</button>
                 <button className="action-button delete" onClick={() => handleDeleteClick(client.id)}>Excluir</button>
@@ -180,6 +194,12 @@ const ConsultClients = () => {
               value={editingClient.address}
               onChange={(e) => setEditingClient({ ...editingClient, address: e.target.value.toUpperCase() })}
               placeholder="Endereço"
+            />
+            <input
+              type="text"
+              value={editingClient.cpfCnpj}
+              onChange={(e) => setEditingClient({ ...editingClient, cpfCnpj: e.target.value })}
+              placeholder="CPF/CNPJ"
             />
             <button onClick={handleSaveChanges}>Salvar</button>
             <button onClick={() => setEditingClient(null)}>Cancelar</button>
